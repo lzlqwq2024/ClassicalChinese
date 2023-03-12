@@ -2,11 +2,12 @@
 ## This is the writer's first self-produced website, and his first website. 
 ## I'll keep going!
 
-## 这是一个文言文学习项目
-## 这是作者的第一个自制网站，也是他的第一个网站
-## 我会继续加油的！
+这是一个文言文学习项目
+这是作者的第一个自制网站，也是他的第一个网站
+我会继续加油的！
 
-# Instructions for use:
+
+## Instructions for use:
 
 1. Use pip to install the third-party dependency
 
@@ -17,7 +18,7 @@
 4. Run python manage.py runserver
 
 
-# 使用说明:
+## 使用说明:
 
 1. 使用 pip 安装第三方依赖
 
