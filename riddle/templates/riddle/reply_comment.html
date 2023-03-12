@@ -1,0 +1,110 @@
+{% load static %}
+{% load extratags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'riddle/css/width_1920_css/reply_comment_style.css' %}" rel="stylesheet" id="stylesheet" />
+    <link href="{% static 'login/image/favicon.ico' %}" rel="shortcut icon"/>
+    <title>文助学习网 | {{article.number}}. {{article.name}} | 评论回复</title>
+</head>
+<body>
+
+<!-- 网页顶部网站标题及面包屑导航栏 -->
+<div class="header">
+    <div class="sitemap">
+        <ul>
+        <p class="title"><b> 文助学习网站 </b></p>
+        <li><a href="/Chinese/article/1/">文章列表</a>\<li>
+        <li><a href="/Chinese/article/A{{ article.number|add:100 }}/">{{article.number}}. {{article.name}}</a>\</li>
+        <li><a href="/Chinese/article/A{{ article.number|add:100 }}/reply/{{ comment.id }}/">评论回复</a></li>
+        <button class="backbutton" type="button" onclick="window.location.href='/Chinese/article/A{{ article.number|add:100 }}/'">回到评论页面</button>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <!-- 显示要回复的评论 -->
+    <div class="comment-space">
+        <a href={{ "/login/index/"|addstr:comment.user.name|addstr:"/" }} target="_blank"><img class="comment-avatar" src="{{ comment.user.avatar.url }}"></img></a>
+        <div class="user-comment-container">
+            {% if not comment.parent_comment %}
+                <div class="user-comment">{{ comment.text|safe }}</div>
+                <p class="user-comment-detail">By&nbsp;&nbsp;{{ comment.user.name }}&nbsp;&nbsp;&nbsp;On&nbsp;&nbsp;<em>{{ comment.c_time|date:'Y.m.d H:i' }}</em></p>
+            {% else %}
+                <div class="user-comment"><em class="re-comment">@{{ comment.parent_comment.user }}: {{ comment.parent_comment.text|safe }}</em><br>{{ comment.text|safe }}</div>
+                <p class="user-comment-detail">{{ comment.user.name }}&nbsp;&nbsp;回复&nbsp;&nbsp;{{ comment.parent_comment.user.name }}&nbsp;&nbsp;&nbsp;On&nbsp;&nbsp;<em>{{ comment.c_time|date:'Y.m.d H:i' }}</em></p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 显示评论编辑框及按钮 -->
+    <div class="write-comment">
+        <p class="addcomment-text">回复评论：</p>
+        <form action="/Chinese/article/A{{ article.number|add:100 }}/reply/{{ comment.id }}/" method="POST">
+            {% csrf_token %}
+            <textarea name="replycomment" id="editor-wrapper"></textarea>
+            <div class="button-wrapper">
+                <button type="reset" class="reset-comment-button">重置</button>
+                <button type="submit" class="save-comment-button">回复</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'riddle/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'riddle/js/popper.js' %}"></script>
+<script type="text/javascript" src="{% static 'riddle/js/bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'login/js/tinymce/tinymce.min.js' %}"></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: '#editor-wrapper',
+        plugins: 'lists, advlist, autolink, autosave, charmap, emoticons, link, searchreplace',
+        toolbar: 'undo redo restoredraft searchreplace| newdocument | cut copy paste | lineheight hr | bold italic underline strikethrough subscript superscript forecolor backcolor blockquote | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect removeformat | outdent indent | bullist numlist | link | charmap emoticons',
+        auto_focus: true,
+        branding: false,
+        elementpath: false,
+        promotion: false,
+        height: 400,
+        placeholder: '说点什么吧……',
+        language: "zh-Hans",
+        {% if message %}
+        init_instance_callback: function(editor){
+            editor.notificationManager.open({
+                text: '{{ message }}',
+                type: 'error',
+            })
+        }
+        {% endif %}
+    });
+
+    function get_width_css(){
+        var width = screen.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        var stylesheet = document.getElementById("stylesheet");
+        if (width > 1183){
+            stylesheet.href = "{% static 'riddle/css/width_1920_css/reply_comment_style.css' %}";
+        }
+        else if (width <= 1183 && width > 830) {
+            stylesheet.href = "{% static 'riddle/css/width_1280_css/reply_comment_style.css' %}";
+        }
+        else {
+            stylesheet.href = "{% static 'riddle/css/width_800_css/reply_comment_style.css' %}";          
+        }
+    }
+
+    window.addEventListener('resize', function () {
+        "use strict";
+        get_width_css(); 
+    });
+
+    window.onload = function(){
+        window.history.replaceState(null,null,window.location.href);
+        get_width_css();
+    }
+</script>
+
+</body>
+</html>

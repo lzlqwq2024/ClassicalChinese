@@ -1,0 +1,314 @@
+#user-detail blockquote {
+    border-left: 2px solid #6d737b;
+    margin-left: 1.5rem;
+    padding-left: 1rem;
+}
+
+body {
+    background-color: whitesmoke;
+}
+
+p.title {
+    padding-left: 150px;
+    padding-right: 60px;
+    color: rgb(65,118,144);
+    display: inline;
+    font-size: 27px;
+}
+
+ul:not(#user-detail ul) {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+li:not(#user-detail li) {
+    display: inline;
+}
+
+.sitemap li a:link, .sitemap li a:visited {
+    padding-right: 15px;
+    font-size: 20px;
+    color: grey;
+    text-align: center;
+    text-decoration: none;
+}
+
+.sitemap li a:hover, .sitemap li a:active {
+    color: black;
+}
+
+.header {
+    background-color: rgb(235,235,235);
+    border: 2px solid rgb(231,231,231);
+}
+
+.sitemap {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 18px;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+
+.front-detail {
+    padding-top: 50px;
+    margin-top: 40px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#avatar {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px 2px grey;
+}
+
+#avatar:hover {
+    cursor: pointer;
+}
+
+#avatardiv {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+}
+
+h4.modal-title {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+#small-description-upload {
+    font-size: 18px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 40px;
+    width: 450px;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 2px solid #dbdbdb;
+}
+
+#small-description-upload:focus {
+    outline: 0;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    transition: border-bottom 500ms ease 0s;
+    border-bottom: 2px solid rgb(0,172,194); 
+}
+
+input.edit-image-input {
+    margin-left: 20px;
+    background-color: white;
+    border: 1px solid rgb(42, 149, 211);
+    border-radius: 3px;
+    width: 80px;
+    height: 30px;
+    color: rgb(42, 149, 211);
+}
+
+p.username {
+    display: inline-block;
+    margin-left: 30px;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+p.small-description {
+    cursor: pointer;
+    line-height: 40px;
+    margin-left: 135px;
+    margin-top: -20px;
+    font-size: 18px;
+    color: rgb(85, 85, 85)
+}
+
+hr.line1{
+    margin-top: 30px; 
+    padding-bottom: 20px;
+}
+
+.user-description {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+p.user-detail-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+button.turn-editor-button {
+    background-color: white;
+    border: 1px solid rgb(42, 149, 211);
+    border-radius: 3px;
+    width: 65px;
+    height: 30px;
+    float: right;
+    margin-top: -60px;
+    margin-right: 20px;
+    color: rgb(42, 149, 211);
+}
+
+button.turn-editor-button:hover, button.turn-editor-button:active {
+    background-color: rgb(216, 241, 255);
+    outline: 0; 
+}
+
+p.user-detail-write-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.button-wrapper {
+    margin-bottom: 20px;
+}
+
+button.turn-text-button {
+    background-color: white;
+    border: 1px solid rgb(42, 149, 211);
+    border-radius: 3px;
+    width: 55px;
+    height: 30px;
+    float: right;
+    margin-top: -45px;
+    margin-right: 20px;
+    color: rgb(42, 149, 211);
+}
+
+button.turn-text-button:hover, button.turn-text-button:active {
+    background-color: rgb(216, 241, 255);
+    outline: 0;
+}
+
+button.save-text-button {
+    background-color: rgb(199, 4, 4);
+    border: 1px solid rgb(199, 4, 4);
+    border-radius: 3px;
+    width: 55px;
+    height: 30px;
+    float: right;
+    margin-top: -45px;
+    margin-right: 85px;
+    color: white;
+}
+
+button.save-text-button:hover, button.save-text-button:active {
+    background-color: rgb(230, 35, 35);
+    outline: 0;
+}
+
+#toolbar-container { 
+    border-bottom: 1px solid #ccc; 
+}
+
+#editor-container { 
+    height: 500px; 
+    border-bottom: 1px solid #ccc; 
+}
+
+hr.line2{
+    margin-top: 30px; 
+    padding-bottom: 30px;
+}
+
+hr.line2-end {
+    margin-top: 30px;
+    margin-bottom: 80px;
+    padding-bottom: 80px;
+}
+
+.user-settings {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+p.user-settings-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+button.logout-button {
+    background-color: rgb(199, 4, 4);
+    border: 1px solid rgb(199, 4, 4);
+    border-radius: 3px;
+    width: 55px;
+    height: 30px;
+    float: right;
+    margin-top: -60px;
+    margin-right: 30px;
+    color: white;
+}
+
+button.logout-button:hover, button.logout-button:active {
+    background-color: rgb(230, 35, 35);
+    outline: 0;
+}
+
+button.reset-password-button {
+    background-color: rgb(199, 4, 4);
+    border: 1px solid rgb(199, 4, 4);
+    border-radius: 3px;
+    width: 85px;
+    height: 30px;
+    float: right;
+    margin-top: -60px;
+    margin-right: 105px;
+    color: white;
+}
+
+button.reset-password-button:hover, button.reset-password-button:active {
+    background-color: rgb(230, 35, 35);
+    outline: 0;
+}
+
+hr.line3 {
+    margin-top: 40px; 
+    padding-bottom: 30px;
+}
+
+.user-message {
+    margin-left: 50px;
+    margin-right: 50px;
+    padding-bottom: 30px;
+    margin-bottom: 60px;
+}
+
+p.user-message-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+p.user-message-detail {
+    font-size: 20px;
+}
+
+a.user-message-link:link, a.user-message-link:visited {
+    float: right;
+    margin-right: 30px;
+    text-decoration: none;
+    color: rgb(0,172,194);
+}
+
+a.user-message-link:hover, a.user-message-link:active {
+    color: rgb(0,184,210);
+}
+

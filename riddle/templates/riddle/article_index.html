@@ -1,0 +1,347 @@
+{% load static %}
+{% load extratags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'riddle/css/width_1920_css/article_index_style.css' %}" rel="stylesheet" id="stylesheet" />
+    <link href="{% static 'login/image/favicon.ico' %}" rel="shortcut icon"/>
+    <title>文助学习网 | 文章列表</title>
+</head>
+<body>
+
+<!-- 页面顶部网站标题及面包屑导航栏 -->
+<div class="header">
+    <div class="sitemap">
+        <ul>
+        <p class="title"><b> 文助学习网站 </b></p>
+        <li><a class="articlelist" href="/Chinese/article/1/">文章列表</a><li>
+        {% if login %}
+            <a href={{ "/login/index/"|addstr:username|addstr:"/" }} target="_blank"><img class="avatar" src="{{ user.avatar.url }}"></img></a>
+        {% else %}
+            <li class="login"><a class="login-href" href="/Chinese/tologin/" target="_blank">去登录</a></li>
+        {% endif %}
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- 查找容器 -->
+    <div class="researchbox">
+
+        <!-- 输入关键词搜索框及搜索按钮 -->
+        <p id="label">查找文章</p>
+        <input id="research" type="text" onkeydown="if(event.keyCode==13){researchbutton.click()}" placeholder="请输入文章标题或编号" value={{keyword}}>
+        <button id="researchbutton" onclick="redirect()">搜索</button>
+        
+        <!-- 是否搜索文章内容复选框 -->
+        <input id="researchcheckbox" type="checkbox">
+        <p id="label1">搜索文章内容</p>
+
+        <!-- 根据已读未读状态搜索文章 -->
+        <p id="label2">状态</p>
+        {% if keyword %}
+            {% if not type or type == "1" %}
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;color: white;background-color: rgb(72, 162, 223);border: 1px solid rgb(72, 162, 223);border-radius: 5px;" onclick="type11()">全部</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type21()">已读</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type31()">未读</button>
+            {% elif type == "2" %}
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type11()">全部</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;color: white;background-color: rgb(72, 162, 223);border: 1px solid rgb(72, 162, 223);border-radius: 5px;" onclick="type21()">已读</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type31()">未读</button>
+           {% else %}
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type11()">全部</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type21()">已读</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;color: white;background-color: rgb(72, 162, 223);border: 1px solid rgb(72, 162, 223);border-radius: 5px;" onclick="type31()">未读</button>
+            {% endif %}
+        {% else %}
+            {% if not type or type == "1" %}
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;color: white;background-color: rgb(72, 162, 223);border: 1px solid rgb(72, 162, 223);border-radius: 5px;" onclick="type12()">全部</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type22()">已读</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type32()">未读</button>
+            {% elif type == "2" %}
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type12()">全部</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;color: white;background-color: rgb(72, 162, 223);border: 1px solid rgb(72, 162, 223);border-radius: 5px;" onclick="type22()">已读</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type32()">未读</button>
+           {% else %}
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type12()">全部</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;background-color: white;border: 1px solid white;border-radius: 5px;" onclick="type22()">已读</button>
+                <button style="display: inline;font-size: 21px;margin-left: 20px;padding-top: -4px;padding-bottom: -4px;padding-left: 10px;padding-right: 10px;color: white;background-color: rgb(72, 162, 223);border: 1px solid rgb(72, 162, 223);border-radius: 5px;" onclick="type32()">未读</button>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="container">
+
+{% if all_article %}
+    <!-- 显示文章列表，包括文章编号、文章名称、文章状态 -->
+    <div class="smalltitle">
+        <p class="articleid">编号</p>
+        <p class="articlename">名称</p>
+        <p class="articlestate">状态</p>
+
+        <!-- 重置所有按钮与重置单页按钮 -->
+        {% if keyword %}
+        {% if intext %}
+        <form class="formresetall" action="/Chinese/article/{{page_num}}/resetall/?keywords={{keyword}}&text={{intext}}" method="post">
+            {% csrf_token %}            
+            <input class="resetall" type="submit" value="重置所有">
+        </form>
+        {% else %}
+        <form class="formresetall" action="/Chinese/article/{{page_num}}/resetall/?keywords={{keyword}}" method="post">
+            {% csrf_token %}            
+            <input class="resetall" type="submit" value="重置所有">
+        </form>
+        {% endif %}
+        {% else %}
+        <form class="formresetall" action="/Chinese/article/{{page_num}}/resetall/" method="post">
+            {% csrf_token %}            
+            <input class="resetall" type="submit" value="重置所有">
+        </form>
+        {% endif %}
+        
+        {% if keyword %}
+        {% if intext %}
+        <form class="formresetpage" action="/Chinese/article/{{page_num}}/resetpage/?keywords={{keyword}}&text={{intext}}" method="post">
+            {% csrf_token %}            
+            <input class="resetpage" type="submit" value="重置单页">
+        </form>
+        {% else %}
+        <form class="formresetpage" action="/Chinese/article/{{page_num}}/resetpage/?keywords={{keyword}}" method="post">
+            {% csrf_token %}            
+            <input class="resetpage" type="submit" value="重置单页">
+        </form>
+        {% endif %}
+        {% else %}
+        <form class="formresetpage" action="/Chinese/article/{{page_num}}/resetpage/" method="post">
+            {% csrf_token %}            
+            <input class="resetpage" type="submit" value="重置单页">
+        </form>
+        {% endif %}
+    </div>
+    <div class="list">
+    <ul>
+    
+    <!-- 显示已读未读状态 -->
+    {% if user %}
+        {% if first_article.seen_user|search_seen:user.id %}
+            <hr><li><p>{{ first_article.number|turnnumber }}</p><a href="/Chinese/article/A{{ first_article.number|add:100 }}/" target=_blank>{{first_article.name}}</a><font style="font-size: 17px; color: white; padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; margin-right: 80px; float:right; border: 1px solid rgb(128, 128, 141); border-radius: 4px; background-color: rgb(128, 128, 141);">已读</font></li><hr>
+        {% else %}
+            <hr><li><p>{{ first_article.number|turnnumber }}</p><a href="/Chinese/article/A{{ first_article.number|add:100 }}/" target=_blank>{{first_article.name}}</a><font style="font-size: 17px; color: white; padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; margin-right: 80px; float:right; border: 1px solid rgb(0, 172, 194); border-radius: 4px; background-color: rgb(0, 172, 194);">未读</font></li><hr>
+        {% endif %}  
+        
+        {% for article in article_list %}
+            {% if article.seen_user|search_seen:user.id %}
+                    <li><p>{{ article.number|turnnumber }}</p><a href="/Chinese/article/A{{ article.number|add:100 }}/" target=_blank>{{article.name}}</a><font style="font-size: 17px; color: white; padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; margin-right: 80px; float:right; border: 1px solid rgb(128, 128, 141); border-radius: 4px; background-color: rgb(128, 128, 141);">已读</font></li><hr>
+            {% else %}    
+                <li><p>{{ article.number|turnnumber }}</p><a href="/Chinese/article/A{{ article.number|add:100 }}/" target=_blank>{{article.name}}</a><font style="font-size: 17px; color: white; padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; margin-right: 80px; float:right; border: 1px solid rgb(0, 172, 194); border-radius: 4px; background-color: rgb(0, 172, 194);">未读</font></li><hr>
+            {% endif %}
+        {% endfor %}
+
+    <!-- 如果用户没有登录则显示 "×"，不支持已读未读状态 -->
+    {% else %}
+        <hr><li><p>{{ first_article.number|turnnumber }}</p><a href="/Chinese/article/A{{ first_article.number|add:100 }}/" target=_blank>{{first_article.name}}</a><font style="font-size: 20px; color: crimson; padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; margin-right: 80px; float:right; font-weight: bold;">&times;</font></li><hr>
+        {% for article in article_list %}
+            <li><p>{{ article.number|turnnumber }}</p><a href="/Chinese/article/A{{ article.number|add:100 }}/" target=_blank>{{article.name}}</a><font style="font-size: 20px; color: crimson; padding-left: 8px; padding-right: 8px; padding-top: 4px; padding-bottom: 4px; margin-right: 80px; float:right; font-weight: bold;">&times;</font></li><hr>
+        {% endfor %}   
+    {% endif %}
+    
+    </ul>
+    </div>
+    
+    {% else %}
+        <div style="text-align:center; padding-top: 50px; padding-bottom: 30px;">
+            <p style="display:inline; padding-top:50px;padding-bottom: 30px; font-size: 27px;"> 抱歉，没有找到任何结果 </p>
+            <button onclick="returnpage()" style="display: inline; margin-left: 20px; font-size: 25px; color: rgb(0, 172, 194); background-color: white; border: 1px solid white; ">返回上一页</button>
+        </div>
+    {% endif %}
+
+<!-- 显示分页栏 -->
+<div class="pagecontainer">
+    {% if pagelist %}
+        <ul class="pagination">
+        <p class="paginationlabel">共 <b>{{page_sum}}</b> 页</p>
+        {% if keyword %}
+            {% if intext %}
+                <li><a href="/Chinese/article/1/?keywords={{keyword}}&text={{intext}}">|<</a></li>
+            {% else %}
+                <li><a href="/Chinese/article/1/?keywords={{keyword}}">|<</a></li>
+            {% endif %}
+        {% else %}
+            <li><a href="/Chinese/article/1/">|<</a></li>      
+        {% endif %}    
+        {% if page_num <= 1 %}
+            {% if keyword %}
+                {% if intext %}
+                    <li><a href="/Chinese/article/1/?keywords={{keyword}}&text={{intext}}"><</a></li>
+                {% else %}
+                    <li><a href="/Chinese/article/1/?keywords={{keyword}}"><</a></li>
+                {% endif %}
+            {% else %}
+                <li><a href="/Chinese/article/1/"><</a></li>
+            {% endif %}   
+        {% else %}
+            {% if keyword %}
+                {% if intext %}
+                    <li><a href="/Chinese/article/{{ page_num|add:-1 }}/?keywords={{keyword}}&text={{intext}}"><</a></li>
+                {% else %}
+                    <li><a href="/Chinese/article/{{ page_num|add:-1 }}/?keywords={{keyword}}"><</a></li>
+                {% endif %}
+            {% else %}
+                <li><a href="/Chinese/article/{{ page_num|add:-1 }}/"><</a></li>
+            {% endif %}   
+        {% endif %}
+        {% for pagenum in pagelist %}
+            {% if pagenum == page_num %}
+                {% if keyword %}
+                    {% if intext %}
+                        <li><a class="onpage" href="/Chinese/article/{{pagenum}}/?keywords={{keyword}}&text={{intext}}">{{pagenum}}</a></li>
+                    {% else %}
+                        <li><a class="onpage" href="/Chinese/article/{{pagenum}}/?keywords={{keyword}}">{{pagenum}}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a class="onpage" href="/Chinese/article/{{pagenum}}/">{{pagenum}}</a></li>
+                {% endif %}   
+            {% else %}
+                {% if keyword %}
+                    {% if intext %}
+                        <li><a href="/Chinese/article/{{pagenum}}/?keywords={{keyword}}&text={{intext}}">{{pagenum}}</a></li>
+                    {% else %}
+                        <li><a href="/Chinese/article/{{pagenum}}/?keywords={{keyword}}">{{pagenum}}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="/Chinese/article/{{pagenum}}/">{{pagenum}}</a></li>
+                {% endif %}   
+            {% endif %}
+        {% endfor %}
+        {% if page_num >= page_sum %}
+            {% if keyword %}
+                {% if intext %}
+                    <li><a href="/Chinese/article/{{page_sum}}/?keywords={{keyword}}&text={{intext}}">></a></li>
+                {% else %}
+                    <li><a href="/Chinese/article/{{page_sum}}/?keywords={{keyword}}">></a></li>
+                {% endif %}
+            {% else %}
+                <li><a href="/Chinese/article/{{page_sum}}/">></a></li>
+            {% endif %}
+        {% else %}
+            {% if keyword %}
+                {% if intext %}
+                    <li><a href="/Chinese/article/{{ page_num|add:1 }}/?keywords={{keyword}}&text={{intext}}">></a></li>
+                {% else %}
+                    <li><a href="/Chinese/article/{{ page_num|add:1 }}/?keywords={{keyword}}">></a></li>
+                {% endif %}
+            {% else %}
+                <li><a href="/Chinese/article/{{ page_num|add:1 }}/">></a></li>
+            {% endif %}
+        {% endif %}
+        {% if keyword %}
+            {% if intext %}
+                <li><a href="/Chinese/article/{{page_sum}}/?keywords={{keyword}}&text={{intext}}">>|</a></li>
+            {% else %}
+                <li><a href="/Chinese/article/{{page_sum}}/?keywords={{keyword}}">>|</a></li>
+            {% endif %}
+        {% else %}
+            <li><a href="/Chinese/article/{{page_sum}}/">>|</a></li>
+        {% endif %}
+        </ul>
+    {% endif %}
+</div>
+
+</div>
+
+<script type="text/javascript" src="{% static 'riddle/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'riddle/js/popper.js' %}"></script>
+<script type="text/javascript" src="{% static 'riddle/js/bootstrap.js' %}"></script>
+<script>
+
+var searchtext = document.getElementById("research");
+function redirect(){
+    var value = searchtext.value;
+    var text = $("#researchcheckbox").prop("checked");
+    if (value){
+        if (text){
+            var href = "/Chinese/article/1/?keywords=".concat(value);
+            {% if type %}
+                href = href.concat("&text=1&type={{type}}");
+            {% else %}
+                href = href.concat("&text=1");
+            {% endif %}
+        }
+        else{
+            var href = "/Chinese/article/1/?keywords=".concat(value);
+            {% if type %}
+                href = href.concat("&type={{type}}");
+            {% endif %}
+        }
+    }
+    else{
+        var href = "/Chinese/article/{{page_num}}/";
+        {% if type %}
+            href = href.concat("?type={{type}}");
+        {% endif %}
+    }
+    window.location.href = href;
+}
+
+function returnpage(){
+    history.go(-1);
+}
+
+function type11(){
+    window.location.href = "/Chinese/article/{{page_num}}/?keywords={{keyword}}&type=1";
+}
+
+function type21(){
+    window.location.href = "/Chinese/article/{{page_num}}/?keywords={{keyword}}&type=2";
+}
+
+function type31(){
+    window.location.href = "/Chinese/article/{{page_num}}/?keywords={{keyword}}&type=3";
+}
+
+function type12(){
+    window.location.href = "/Chinese/article/{{page_num}}/?type=1";
+}
+
+function type22(){
+    window.location.href = "/Chinese/article/{{page_num}}/?type=2";
+}
+
+function type32(){
+    window.location.href = "/Chinese/article/{{page_num}}/?type=3";
+}
+
+function get_width_css(){
+    var width = screen.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    var stylesheet = document.getElementById("stylesheet");
+    if (width > 1180){
+        stylesheet.href = "{% static 'riddle/css/width_1920_css/article_index_style.css' %}";
+    }
+    else if (width <= 1180 && width > 974){
+        stylesheet.href = "{% static 'riddle/css/width_1280_css/article_index_style.css' %}";
+    }
+    else if (width <= 974){
+        stylesheet.href = "{% static 'riddle/css/width_800_css/article_index_style.css' %}";
+    }
+}
+
+
+window.addEventListener('resize', function () {
+    "use strict";
+    get_width_css(); 
+});
+
+window.onload = function(){
+    window.history.replaceState(null,null,window.location.href);
+    get_width_css(); 
+}
+
+</script>
+
+</body>
+</html>

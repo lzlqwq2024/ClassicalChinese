@@ -1,0 +1,167 @@
+body {
+    background-color: WhiteSmoke;
+}
+
+button.backbutton {
+    float: right;
+    margin-right:140px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px; 
+    width: 160px;
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid rgb(0,172,194);
+    background-color: rgb(0,172,194);
+}
+
+button.backbutton:hover {
+    border: 1px solid rgb(0,184,210);
+    background-color: rgb(0,184,210);
+}
+
+p.title {
+    padding-left: 150px;
+    padding-right: 60px;
+    color: rgb(65,118,144);
+    display: inline;
+    font-size: 27px;
+}
+
+ul:not(.comments-space ul) {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+li:not(.comments-space li) {
+    display: inline;
+}
+
+.header a:link, .header a:visited {
+    padding-right: 15px;
+    font-size: 20px;
+    color: grey;
+    text-align: center;
+    text-decoration: none;
+}
+
+.hearder a:hover, .header a:active {
+    color: black;
+}
+
+.header {
+    background-color: rgb(235,235,235);
+    border: 2px solid rgb(231,231,231);
+}
+
+.sitemap {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 18px;
+}
+
+.container {
+    margin-top: 40px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.comment-space {
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    margin-left: 40px;
+    margin-right: 40px;
+    overflow: hidden;
+}
+
+img.comment-avatar {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    margin-right: 20px;
+    box-shadow: 2px 2px 4px 2px grey;
+}
+
+.user-comment-container {
+    display: inline-block;
+    width: 900px;
+    word-wrap: break-word;
+    border-left: 1px dashed rgb(0,184,210);
+    border-bottom: 1px dashed lightgrey;
+    margin-top: 40px;
+}
+
+.user-comment {
+    padding-left: 30px;
+    padding-right: 30px;
+    line-height: 40px;
+    font-size: 20px;
+    word-wrap: break-word;
+}
+
+em.re-comment {
+    display: block;
+    padding-right: 30px;
+    margin-bottom: -50px;
+    line-height: 40px;
+    font-size: 18px;
+    word-wrap: break-word;
+    color: rgb(92, 92, 92);
+}
+
+p.user-comment-detail {
+    display: block;
+    padding-left: 30px;
+    color: rgb(92, 92, 92);
+    padding-bottom: 10px;
+}
+
+.write-comment {
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 80px;
+    padding-bottom: 40px;
+}
+
+p.addcomment-text {
+    font-size: 18px;
+}
+
+.button-wrapper {
+    margin-top: 20px;
+}
+
+button.reset-comment-button {
+    width: 70px;
+    height: 40px;
+    border: 1px solid rgb(71, 70, 70);
+    border-radius: 5px;
+    font-size: 17px;
+    color: white;
+    background-color: rgb(71, 70, 70);
+}
+
+button.reset-comment-button:hover, button.reset-comment-button:active {
+    background-color: rgb(56, 56, 56);
+    outline: 0;
+}
+
+button.save-comment-button {
+    width: 70px;
+    height: 40px;
+    border: 1px solid rgb(0, 146, 0);
+    border-radius: 5px;
+    font-size: 17px;
+    color: white;
+    background-color: rgb(0, 146, 0);
+    float: right;
+}
+
+button.save-comment-button:hover, button.save-comment-button:active {
+    background-color: rgb(0, 122, 0);
+    outline: 0;
+}

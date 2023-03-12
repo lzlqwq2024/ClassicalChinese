@@ -1,0 +1,634 @@
+{% load static %}
+{% load static %}
+{% load extratags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'riddle/css/width_1920_css/show_article_riddle_style.css' %}" rel="stylesheet" id="stylesheet"/>
+    <link href="{% static 'login/image/favicon.ico' %}" rel="shortcut icon"/>
+    <title>文助学习网 | {{article.number}}. {{article.name}} 文章习题</title>
+</head>
+<body>
+
+<!-- 网页顶部网站标题及面包屑导航栏 -->
+<div class="header">
+    <div class="sitemap">
+        <ul>
+        <p class="title"><b> 文助学习网站 </b></p>
+        <li><a href="/Chinese/article/1/">文章列表</a>\<li>
+        <li><a href="/Chinese/article/A{{ article.number|add:100 }}/">{{article.number}}. {{article.name}}</a>\</li>
+        <li><a href="/Chinese/article/A{{ article.number|add:100 }}/riddle/">文章习题</a></li>
+        <button class="returnbutton" type="button" onclick="window.location.href='/Chinese/article/A{{ article.number|add:100 }}/'">返回文章</button>
+        </ul>
+    </div>
+</div>
+
+{% csrf_token %}
+
+<div class="container">
+    <div class="theme">
+        <h2><b> {{article.number}}. {{article.name}} 文章习题 </b></h1><br>
+        {% if riddle1 or riddle2 or riddle3 or riddle4 %}
+            <hr>
+        {% else %}
+            <hr>
+            <p style="font-size: 25px; line-height: 50px; padding-left: 40px; padding-right: 40px; padding-top: 20px; margin-bottom: 20px">抱歉，此文章暂无更多问题~</p>
+            <hr style="margin-top: 30px">
+        {% endif %}
+    </div>
+
+    <!-- 显示写出文章内字词意思类题目 -->
+    {% if riddle1 %}
+        <div class="topic1">
+            <div class="title1-group">
+                <p>请写出以下字词的意思：</p>
+                <input type="button" onclick="judge_answer1()" value="判断对错">
+                <input type="button" id="labelbutton1" onclick="turn_answer1()" value="查看答案">
+            </div>
+            <div class="text1-group">
+            {% for riddle in riddle1 %}
+                {% if riddle.number %}
+                    {% if flag1 %}
+                        <p>{{riddle.number}}. {{ answer1|addstr:"^"|addstr:"1"|insert:riddle.topic }} {{ flag1|judgestr:riddle.number }}</p>
+                    {% else %}
+                        <p>{{riddle.number}}. {{ answer1|addstr:"^"|addstr:"1"|insert:riddle.topic  }}</p>
+                    {% endif %}
+                {% else %}
+                    {% if flag1 %}
+                        <p>{{ answer1|addstr:"^"|addstr:"1"|insert:riddle.topic }} {{ flag1|judgestr:0 }}</p>
+                    {% else %}
+                       <p>{{ answer1|addstr:"^"|addstr:"1"|insert:riddle.topic }}</p>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            </div>
+            <div id="answer1-group" style="display: none">
+                <p class="answer1-label">答案：</p>
+                {% for riddle in riddle1 %}
+                    {% if riddle.number %}
+                        {% if forloop.counter|remainder:"2" == 0 %}
+                            <p class="even-answer">{{riddle.number}}. {{riddle.answer}}</p><br>
+                        {% else %}
+                            <p>{{riddle.number}}. {{riddle.answer}}</p>
+                        {% endif %}
+                    {% else %}
+                        <p>{{riddle.answer}}</p>
+                    {% endif %}
+                {% endfor %}
+            </div><hr id="line1" style="margin-top: 50px">
+        </div>
+    {% endif %}
+
+    <!-- 显示翻译句子类题目 -->
+    {% if riddle2 %}
+        <div class="topic2">
+            <div class="title2-group">
+                <p>请将以下句子翻译成现代汉语：</p>
+                <input type="button" id="labelbutton2" onclick="turn_answer2()" value="查看答案">
+            </div>
+            <div class="text2-group">
+            {% for riddle in riddle2 %}
+                {% if riddle.number %}
+                    <p>{{riddle.number}}. {{riddle.topic}}</p>
+                    <input type='text' class='kind2-input'>
+                {% else %}
+                    <p>{{riddle.topic}}</p>
+                    <input type='text' class='kind2-input'>
+                {% endif %}
+            {% endfor %}
+            </div>
+            <div id="answer2-group" style="display: none">
+                <p class="answer2-label">答案：</p>
+                {% for riddle in riddle2 %}
+                    {% if riddle.number %}
+                        <p>{{riddle.number}}. {{riddle.answer}}</p>
+                    {% else %}
+                        <p>{{riddle.answer}}</p>
+                    {% endif %}
+                {% endfor %}
+            </div><hr id="line2" style="margin-top: 50px">
+        </div>
+    {% endif %}
+
+    <!-- 显示写出特定字词意思类题目 -->
+    {% if riddle3 %}
+        <div class="topic3">
+            <div class="title3-group">
+                <p>请写出以下字词的意思：</p>
+                <input type="button" onclick="judge_answer3()" value="判断对错">
+                <input type="button" id="labelbutton3" onclick="turn_answer3()" value="查看答案">
+            </div>
+            <div class="text3-group">
+            {% for riddle in riddle3 %}
+                {% if riddle.number %}
+                    {% if flag3 %}
+                        {% if riddle.description %}
+                            <p>{{riddle.number}}. {{riddle.description}}</p>
+                            <p>{{ answer3|addstr:"^"|addstr:"3"|insert:riddle.topic }} {{ flag3|judgestr:riddle.number }}</p>
+                        {% else %}
+                            <p>{{riddle.number}}. {{ answer3|addstr:"^"|addstr:"3"|insert:riddle.topic }} {{ flag3|judgestr:riddle.number }}</p>
+                        {% endif %}
+                    {% else %}
+                        {% if riddle.description %}
+                            <p>{{riddle.number}}. {{riddle.description}}</p>
+                            <p>{{ answer3|addstr:"^"|addstr:"3"|insert:riddle.topic  }}</p> 
+                        {% else %}
+                            <p>{{riddle.number}}. {{ answer3|addstr:"^"|addstr:"3"|insert:riddle.topic  }}</p> 
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    {% if flag3 %}
+                        {% if riddle.description %}
+                            <p>{{riddle.description}}</p>
+                            <p>{{ answer3|addstr:"^"|addstr:"3"|insert:riddle.topic }} {{ flag3|judgestr:0 }}</p>
+                        {% else %}
+                            <p>{{ answer3|addstr:"^"|addstr:"3"|insert:riddle.topic }} {{ flag3|judgestr:0 }}</p>
+                        {% endif %}
+                    {% else %}
+                        {% if riddle.description %}
+                            <p>{{riddle.description}}</p>
+                            <p>{{ answer3|addstr:"^"|addstr:"3"|insert:riddle.topic }}</p>
+                        {% else %}
+                            <p>{{ answer3|addstr:"^"|addstr:"3"|insert:riddle.topic }}</p>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            </div>
+            <div id="answer3-group" style="display: none">
+                <p class="answer3-label">答案：</p>
+                {% for riddle in riddle3 %}
+                    {% if riddle.number %}
+                        {% if forloop.counter|remainder:"2" == 0 %}
+                            <p class="even-answer">{{riddle.number}}. {{riddle.answer}}</p><br>
+                        {% else %}
+                            <p>{{riddle.number}}. {{riddle.answer}}</p>
+                        {% endif %}
+                    {% else %}
+                        <p>{{riddle.answer}}</p>
+                    {% endif %}
+                {% endfor %}
+            </div><hr id="line3" style="margin-top: 50px">
+        </div>
+    {% endif %}
+
+    <!-- 显示写出成语意思或古诗意思类题目 -->
+    {% if riddle4 %}
+        <div class="topic4">
+            <div class="title4-group">
+                <p>请依题目写出古诗、成语或写出其意思：</p>
+                <input type="button" id="labelbutton4" onclick="turn_answer4()" value="查看答案">
+            </div>
+            <div class="text4-group">
+            {% for riddle in riddle4 %}
+                {% if riddle.number %}
+                    <p>{{riddle.number}}. {{riddle.topic}}</p>
+                    <input type='text' class='kind4-input'>
+                {% else %}
+                    <p>{{riddle.topic}}</p>
+                    <input type='text' class='kind4-input'>
+                {% endif %}
+            {% endfor %}
+            </div>
+            <div id="answer4-group" style="display: none">
+                <p class="answer4-label">答案：</p>
+                {% for riddle in riddle4 %}
+                    {% if riddle.number %}
+                        <p>{{riddle.number}}. {{riddle.answer}}</p>
+                    {% else %}
+                        <p>{{riddle.answer}}</p>
+                    {% endif %}
+                {% endfor %}
+            </div><hr id="line4" style="margin-top: 50px">
+        </div>
+    {% endif %}
+    
+    <!-- 前一篇文章习题及后一篇文章习题导航栏 -->
+    <div class="ablink">
+        {% if article.number == 1 and article.number == last_number %}
+            <a class="blink" href="/Chinese/article/A101/riddle/">没有更少了……</a>
+            <a class="alink" href="/Chinese/article/A{{ article.number|add:100 }}/riddle/">没有更多了……</a>
+        {% elif article.number == 1 %}
+            <a class="blink" href="/Chinese/article/A101/">没有更少了……</a>
+            <a class="alink" href="/Chinese/article/A{{ article.number|add:101 }}/riddle/">后一篇 →</a>
+        {% elif article.number == last_number %}
+            <a class="blink" href="/Chinese/article/A{{ article.number|add:99 }}/riddle/">← 前一篇</a>
+            <a class="alink" href="/Chinese/article/A{{ article.number|add:100 }}/riddle/">没有更多了……</a> 
+        {% else %}
+            <a class="blink" href="/Chinese/article/A{{ article.number|add:99 }}/riddle/">← 前一篇</a>
+            <a class="alink" href="/Chinese/article/A{{ article.number|add:101 }}/riddle/">后一篇 →</a> 
+        {% endif %}
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'riddle/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'riddle/js/popper.js' %}"></script>
+<script type="text/javascript" src="{% static 'riddle/js/bootstrap.js' %}"></script>
+
+<script>
+
+function turn_answer1(){
+    var labelbutton = document.getElementById("labelbutton1");
+    var answer = document.getElementById("answer1-group");
+    var line = document.getElementById("line1");
+
+    if (labelbutton.value == "查看答案"){
+        answer.style.display = "block";
+        labelbutton.value = "收起答案";
+        line.style.marginTop = "20px";
+    }
+    else {
+        answer.style.display = "none";
+        labelbutton.value = "查看答案";
+        line.style.marginTop = "50px";
+    }
+}
+
+function judge_answer1(){
+    var inputlist = document.getElementsByClassName("kind1-input");
+    var result="";
+    for (var i=0; i<inputlist.length; i++){
+        if (i == inputlist.length-1){
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);
+            }
+            else {
+                result = result.concat("_");
+            }
+        }
+        else{
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);  
+                result = result.concat("^");   
+            }
+            else {
+                result = result.concat("_");  
+                result = result.concat("^");   
+            }
+        }
+    }
+    var answer1_data = result;
+    var answer2_data = transfer_answer2();
+    var answer3_data = transfer_answer3();
+    var answer4_data = transfer_answer4(); 
+    
+    var temp = document.createElement("form");
+    temp.action = "/Chinese/article/A{{ article.number|add:100 }}/riddle/";
+    temp.method = "POST";
+    temp.style.display = "none";
+
+    var opt1 = document.createElement("textarea");
+    opt1.name = "answer1";
+    opt1.value = answer1_data;
+    temp.appendChild(opt1);
+
+    var opt2 = document.createElement("textarea");
+    opt2.name = "answer2";
+    opt2.value = answer2_data;
+    temp.appendChild(opt2); 
+
+    var opt3 = document.createElement("textarea");
+    opt3.name = "answer3";
+    opt3.value = answer3_data;
+    temp.appendChild(opt3); 
+
+    var opt4 = document.createElement("textarea");
+    opt4.name = "answer4";
+    opt4.value = answer4_data;
+    temp.appendChild(opt4); 
+
+    var csrftoken=document.createElement("input");
+    csrftoken.type= "hidden";
+    csrftoken.name = "csrfmiddlewaretoken";
+    csrftoken.value = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+    temp.appendChild(csrftoken);
+        
+    document.body.appendChild(temp);
+    temp.submit();
+}
+
+function  turn_answer2(){
+    var labelbutton = document.getElementById("labelbutton2");
+    var answer = document.getElementById("answer2-group");
+    var line = document.getElementById("line2");
+
+    if (labelbutton.value == "查看答案"){
+        answer.style.display = "block";
+        labelbutton.value = "收起答案";
+        line.style.marginTop = "20px";
+    }
+    else {
+        answer.style.display = "none";
+        labelbutton.value = "查看答案";
+        line.style.marginTop = "50px";
+    }
+}
+
+function transfer_answer2(){
+    var inputlist = document.getElementsByClassName("kind2-input");
+    var result = "";
+    for (var i=0; i<inputlist.length; i++){
+        if (i == inputlist.length-1){
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);
+            }
+            else {
+                result = result.concat("_");
+            }
+        }
+        else{
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);  
+                result = result.concat("^");   
+            }
+            else {
+                result = result.concat("_");  
+                result = result.concat("^");   
+            }
+        }
+    }
+    return result;
+}
+
+function judge_answer3(){
+    var inputlist = document.getElementsByClassName("kind1-input");
+    var result="";
+    for (var i=0; i<inputlist.length; i++){
+        if (i == inputlist.length-1){
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);
+            }
+            else {
+                result = result.concat("_");
+            }
+        }
+        else{
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);  
+                result = result.concat("^");   
+            }
+            else {
+                result = result.concat("_");  
+                result = result.concat("^");   
+            }
+        }
+    }
+    var answer1_data = result;
+    var answer2_data = transfer_answer2();
+    var answer3_data = transfer_answer3();
+    var answer4_data = transfer_answer4(); 
+    
+    var temp = document.createElement("form");
+    temp.action = "/Chinese/article/A{{ article.number|add:100 }}/riddle/";
+    temp.method = "POST";
+    temp.style.display = "none";
+
+    var opt1 = document.createElement("textarea");
+    opt1.name = "answer1";
+    opt1.value = answer1_data;
+    temp.appendChild(opt1);
+
+    var opt2 = document.createElement("textarea");
+    opt2.name = "answer2";
+    opt2.value = answer2_data;
+    temp.appendChild(opt2); 
+
+    var opt3 = document.createElement("textarea");
+    opt3.name = "answer3";
+    opt3.value = answer3_data;
+    temp.appendChild(opt3); 
+
+    var opt4 = document.createElement("textarea");
+    opt4.name = "answer4";
+    opt4.value = answer4_data;
+    temp.appendChild(opt4); 
+
+    var csrftoken=document.createElement("input");
+    csrftoken.type= "hidden";
+    csrftoken.name = "csrfmiddlewaretoken";
+    csrftoken.value = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+    temp.appendChild(csrftoken);
+        
+    document.body.appendChild(temp);
+    temp.submit();
+}
+
+function  turn_answer2(){
+    var labelbutton = document.getElementById("labelbutton2");
+    var answer = document.getElementById("answer2-group");
+    var line = document.getElementById("line2");
+
+    if (labelbutton.value == "查看答案"){
+        answer.style.display = "block";
+        labelbutton.value = "收起答案";
+        line.style.marginTop = "20px";
+    }
+    else {
+        answer.style.display = "none";
+        labelbutton.value = "查看答案";
+        line.style.marginTop = "50px";
+    }
+}
+
+function transfer_answer2(){
+    var inputlist = document.getElementsByClassName("kind2-input");
+    var result = "";
+    for (var i=0; i<inputlist.length; i++){
+        if (i == inputlist.length-1){
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);
+            }
+            else {
+                result = result.concat("_");
+            }
+        }
+        else{
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);  
+                result = result.concat("^");   
+            }
+            else {
+                result = result.concat("_");  
+                result = result.concat("^");   
+            }
+        }
+    }
+    return result;
+}
+
+
+function transfer_answer3(){
+    var inputlist = document.getElementsByClassName("kind3-input");
+    var result = "";
+    for (var i=0; i<inputlist.length; i++){
+        if (i == inputlist.length-1){
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);
+            }
+            else {
+                result = result.concat("_");
+            }
+        }
+        else{
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);  
+                result = result.concat("^");   
+            }
+            else {
+                result = result.concat("_");  
+                result = result.concat("^");   
+            }
+        }
+    }
+    return result;
+}
+
+function transfer_answer4(){
+    var inputlist = document.getElementsByClassName("kind4-input");
+    var result = "";
+    for (var i=0; i<inputlist.length; i++){
+        if (i == inputlist.length-1){
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);
+            }
+            else {
+                result = result.concat("_");
+            }
+        }
+        else{
+            if (inputlist[i].value){
+                result = result.concat(inputlist[i].value);  
+                result = result.concat("^");   
+            }
+            else {
+                result = result.concat("_");  
+                result = result.concat("^");   
+            }
+        }
+    }
+    return result;
+}
+
+function  turn_answer4(){
+    var labelbutton = document.getElementById("labelbutton4");
+    var answer = document.getElementById("answer4-group");
+    var line = document.getElementById("line4");
+
+    if (labelbutton.value == "查看答案"){
+        answer.style.display = "block";
+        labelbutton.value = "收起答案";
+        line.style.marginTop = "20px";
+    }
+    else {
+        answer.style.display = "none";
+        labelbutton.value = "查看答案";
+        line.style.marginTop = "50px";
+    }
+}
+
+function turn_answer3(){
+    var labelbutton = document.getElementById("labelbutton3");
+    var answer = document.getElementById("answer3-group");
+    var line = document.getElementById("line3");
+
+    if (labelbutton.value == "查看答案"){
+        answer.style.display = "block";
+        labelbutton.value = "收起答案";
+        line.style.marginTop = "20px";
+    }
+    else {
+        answer.style.display = "none";
+        labelbutton.value = "查看答案";
+        line.style.marginTop = "50px";
+    }
+}
+
+function remember_answer1(){
+    var answer1_data = "{{answer1}}";
+    var answer1_datalist = answer1_data.split("^");
+    while (answer1_datalist.includes("_")){
+        var dnum = answer1_datalist.indexOf("_");
+        answer1_datalist.splice(dnum, 1, " ");
+    }
+    var inputlist = document.getElementsByClassName("kind1-input");
+    for (var i=0; i<inputlist.length; i++){
+        var input = inputlist[i];
+        input.value = answer1_datalist[i];
+    }        
+}
+
+function remember_answer2(){
+    var answer2_data = "{{answer2}}";
+    var answer2_datalist = answer2_data.split("^");
+    while (answer2_datalist.includes("_")){
+        var dnum = answer2_datalist.indexOf("_");
+        answer2_datalist.splice(dnum, 1, " ");
+    }
+    var inputlist = document.getElementsByClassName("kind2-input");
+    for (var i=0; i<inputlist.length; i++){
+        var input = inputlist[i];
+        input.value = answer2_datalist[i];
+    }        
+}
+
+function remember_answer3(){
+    var answer3_data = "{{answer3}}";
+    var answer3_datalist = answer3_data.split("^");
+    while (answer3_datalist.includes("_")){
+        var dnum = answer3_datalist.indexOf("_");
+        answer3_datalist.splice(dnum, 1, " ");
+    }
+    var inputlist = document.getElementsByClassName("kind3-input");
+    for (var i=0; i<inputlist.length; i++){
+        var input = inputlist[i];
+        input.value = answer3_datalist[i];
+    }        
+}
+
+function remember_answer4(){
+    var answer4_data = "{{answer4}}";
+    var answer4_datalist = answer4_data.split("^");
+    while (answer4_datalist.includes("_")){
+        var dnum = answer4_datalist.indexOf("_");
+        answer4_datalist.splice(dnum, 1, " ");
+    }
+    var inputlist = document.getElementsByClassName("kind4-input");
+    for (var i=0; i<inputlist.length; i++){
+        var input = inputlist[i];
+        input.value = answer4_datalist[i];
+    }        
+}
+
+function get_width_css(){
+    var width = screen.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    var stylesheet = document.getElementById("stylesheet");
+    if (width > 974){
+        stylesheet.href = "{% static 'riddle/css/width_1920_css/show_article_riddle_style.css' %}";
+    }
+    else {
+        stylesheet.href = "{% static 'riddle/css/width_800_css/show_article_riddle_style.css' %}";
+    }
+}
+
+
+window.addEventListener('resize', function () {
+    "use strict";
+    get_width_css(); 
+});
+
+window.onload = function(){
+    window.history.replaceState(null,null,window.location.href);
+    remember_answer1();
+    remember_answer2();
+    remember_answer3();
+    remember_answer4();
+    get_width_css();
+}
+
+</script>
+
+</body>
+</html>
