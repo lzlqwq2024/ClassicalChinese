@@ -3,7 +3,9 @@
 ## I'll keep going!
 
 这是一个文言文学习项目
+
 这是作者的第一个自制网站，也是他的第一个网站
+
 我会继续加油的！
 
 
@@ -16,6 +18,7 @@
 3. Run migrate to create databases and tables and populate them
 
 4. Run python manage.py runserver
+
 
 
 ## 使用说明:
