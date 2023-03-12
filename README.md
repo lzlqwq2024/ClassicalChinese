@@ -1,8 +1,8 @@
 > This is a Classical Chinese study program
 
-> This is the writer's first self-produced website, and his first website. 
+This is the writer's first self-produced website, and his first website. 
 
-> I'll keep going!
+I'll keep going!
 
 
 
