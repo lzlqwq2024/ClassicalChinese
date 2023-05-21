@@ -11,6 +11,7 @@ from riddle.models import Article
 import hashlib
 import datetime
 import random
+import pytz
 
 def hashcode(s, salt='classicalchinese'):
     h = hashlib.sha256()
@@ -290,6 +291,7 @@ def user_confirm(request):
         
         c_time = confirm.c_time
         now = datetime.datetime.now()
+        now = now.replace(tzinfo=pytz.timezone('UTC'))
         if now > c_time + datetime.timedelta(settings.CONFIRM_DAYS):
             confirm.user.delete()
             del request.session['tag']
