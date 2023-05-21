@@ -393,6 +393,7 @@ def resetpassword(request):
         password = conditional_escape(request.POST.get('password', ''))
         password_repeat = conditional_escape(request.POST.get('password_repeat', ''))
         now = datetime.datetime.now()
+        now = now.replace(tzinfo=pytz.timezone('UTC'))
         if now > c_time + datetime.timedelta(settings.CONFIRM_DAYS):
             message = '邮件已过期，请重新重置密码！'
             confirm.delete()
