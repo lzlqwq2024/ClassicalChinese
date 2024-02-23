@@ -14,4 +14,4 @@
 
 &nbsp;
 
-**我会继续加油的！**
+**keep on moving!**
